@@ -29,7 +29,8 @@
           video = document.createElement( 'video' ),
           videocanvas = document.createElement( 'canvas' ),
           videoctx = videocanvas.getContext( '2d' ),
-          move = false;
+          move = false,
+          mouse = { x: 0, y: 0 };
 
       videocanvas.width = 500;
       videocanvas.height = 500;
@@ -63,10 +64,13 @@
         ctx.fillStyle = '#fff000';
         ctx.fillRect( 0, 0, canvas.width, canvas.height );
 
-        if (move) {
-          ctx.fillStyle = '#ff008e'
-          ctx.fillRect( 0, 0, 500, 200 )
-        }
+        // if (move) {
+        //   ctx.fillStyle = '#ff008e'
+        //   ctx.fillRect( 0, 0, 500, 200 )
+        //
+        // }
+        ctx.fillStyle = '#ff008e'
+        ctx.fillRect( mouse.x, mouse.y, 40, 40 )
 
         ctx.globalCompositeOperation = 'destination-in';
 
@@ -78,13 +82,18 @@
 
       }
 
-      canvas.onmouseover = function () {
-        move = true;
+      canvas.onmousemove = function (e) {
+        mouse.x = e.offsetX;
+        mouse.y = e.offsetY;
       }
 
-      canvas.onmouseout = function () {
-        move = false;
-      }
+      // canvas.onmouseover = function () {
+      //   move = true;
+      // }
+      //
+      // canvas.onmouseout = function () {
+      //   move = false;
+      // }
 
         requestAnimationFrame( draw );
 
