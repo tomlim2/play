@@ -28,7 +28,8 @@
 
           video = document.createElement( 'video' ),
           videocanvas = document.createElement( 'canvas' ),
-          videoctx = videocanvas.getContext( '2d' );
+          videoctx = videocanvas.getContext( '2d' ),
+          move = false;
 
       videocanvas.width = 500;
       videocanvas.height = 500;
@@ -38,7 +39,7 @@
       video.loop = true;
       video.volume = 0;
 
-      document.body.appendChild(videocanvas);
+      // document.body.appendChild(videocanvas);
 
       function processVideo() {
         videoctx.drawImage( video, 0, 0 );
@@ -62,6 +63,11 @@
         ctx.fillStyle = '#fff000';
         ctx.fillRect( 0, 0, canvas.width, canvas.height );
 
+        if (move) {
+          ctx.fillStyle = '#ff008e'
+          ctx.fillRect( 0, 0, 500, 200 )
+        }
+
         ctx.globalCompositeOperation = 'destination-in';
 
         processVideo();
@@ -70,6 +76,14 @@
 
         requestAnimationFrame( draw );
 
+      }
+
+      canvas.onmouseover = function () {
+        move = true;
+      }
+
+      canvas.onmouseout = function () {
+        move = false;
       }
 
         requestAnimationFrame( draw );
