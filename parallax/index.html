@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+
+    <style>
+      body{
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      img{
+        margin: 0;
+        padding: 0;
+      }
+
+      header{
+        position: relative;
+        height: 600px;
+        background: #03b3e2;
+      }
+
+      #logo{
+        position: relative;
+        margin: auto;
+        display: block;
+        top: 50px;
+      }
+
+      #fg{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+
+      .cloud{
+        width: 300px;
+        bottom: auto;
+      }
+
+      .small{
+        width: 100px;
+      }
+
+      .layer{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        will-change: transform;
+      }
+
+      .cloud{
+        width: 300px;
+        bottom: auto;
+      }
+
+      .small{
+        width: 100px;
+      }
+
+      #cloud1{
+        left: 60%;
+        top: 130px;
+      }
+
+      #cloud2{
+        left: 10%;
+        top: 100px;
+      }
+
+      #cloud3{
+        left: 70%;
+        top: 50px;
+        width: 150px;
+      }
+
+      section{
+        position: relative;
+        height: 500px;
+        background: #1a1a1a;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+    <header>
+      <img id="cloud1" class="layer parallax cloud small" data-offset="0.7" src="cloud.svg">
+      <img id="cloud2" class="layer parallax cloud" data-offset="0.3" src="cloud.svg">
+      <img id="cloud3" class="layer parallax cloud small" data-offset="0.4" src="cloud.svg">
+
+      <img id="layer4" class="layer parallax" data-offset="1" src="layer-4a.svg">
+      <img id="layer3" class="layer parallax" data-offset="0.7" src="layer-3a.svg">
+      <img id="layer2" class="layer parallax" data-offset="0.5" src="layer-2a.svg">
+
+      <img id="logo" class="layer parallex" data-offset="-2" width="200px" src="logo.svg">
+
+      <img id="fg" class="layer" src="layer-1a.svg">
+    </header>
+    <section>
+
+    </section>
+    <section>
+
+    </section>
+
+    <script>
+    var _els = document.getElementsByClassName( 'parallax' ),
+        _layers = [],
+        _scrollY = window.scrollY;
+
+
+
+    for (var i = 0; i < _els.length; i++) {
+      var el  = _els[i]
+      var offset = el.dataset.offset;
+      _layers.push({ el: el, y: 0, offset: offset });
+    };
+
+    requestAnimationFrame( animate );
+
+    window.addEventListener( 'scroll', handle_scroll );
+    function handle_scroll ( e ) {
+      _scrollY = window.scrollY;
+    }
+
+    function animate() {
+       for (var i = 0; i < _layers.length; i++) {
+         _layers[i].y = _scrollY * _layers[i].offset;
+         _layers[i].el.style.transform = 'translateY(' + _layers[i].y + 'px)';
+       }
+        requestAnimationFrame( animate );
+    }
+
+    </script>
+
+
+
+
+    <script>
+
+
+    </script>
+  </body>
+</html>
