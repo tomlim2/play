@@ -3,7 +3,7 @@
 <html>
 
   <head>
-    <title></title>
+    <title>Parallax practice2</title>
     <meta charset="utf-8" />
 
     <style>
@@ -87,7 +87,7 @@
       #canvas{
         display: block;
         margin: auto;
-        background-color: red;
+        /* background-color: red; */
       }
 
     </style>
@@ -96,68 +96,54 @@
 
   <body>
     <header>
-      <img id="cloud1" class="layer parallax cloud small" data-offset="0.7" src="cloud.svg">
-      <img id="cloud2" class="layer parallax cloud" data-offset="0.3" src="cloud.svg">
-      <img id="cloud3" class="layer parallax cloud small" data-offset="0.4" src="cloud.svg">
+      <img id="cloud1" class="layer parallax cloud small" data-offset="0.7" src="img/cloud.svg">
+      <img id="cloud2" class="layer parallax cloud" data-offset="0.3" src="img/cloud.svg">
+      <img id="cloud3" class="layer parallax cloud small" data-offset="0.4" src="img/cloud.svg">
 
-      <img id="layer4" class="layer parallax" data-offset="1" src="layer-4a.svg">
-      <img id="layer3" class="layer parallax" data-offset="0.7" src="layer-3a.svg">
-      <img id="layer2" class="layer parallax" data-offset="0.5" src="layer-2a.svg">
+      <img id="layer4" class="layer parallax" data-offset="1" src="img/layer-4a.svg">
+      <img id="layer3" class="layer parallax" data-offset="0.7" src="img/layer-3a.svg">
+      <img id="layer2" class="layer parallax" data-offset="0.5" src="img/layer-2a.svg">
 
-      <img id="logo" class="layer parallex" data-offset="-2" width="200px" src="logo.svg">
+      <img id="logo" class="layer parallex" data-offset="-2" width="200px" src="img/logo.svg">
 
-      <img id="fg" class="layer" src="layer-1a.svg">
+      <img id="fg" class="layer" src="img/layer-1a.svg">
     </header>
     <section>
       <canvas id="canvas" width="460" height="460"></canvas>
     </section>
 
     <section>
+      <canvas id="canvas" width="460" height="460"></canvas>
     </section>
 
     <script>
-    var _els = document.getElementsByClassName( 'parallax' ),
-        _layers = [],
-        _scrollY = window.scrollY;
-
-    for (var i = 0; i < _els.length; i++) {
-      var el  = _els[i]
-      var offset = el.dataset.offset;
-      _layers.push({ el: el, y: 0, offset: offset });
-    };
-
-    requestAnimationFrame( animate );
-
-    window.addEventListener( 'scroll', handle_scroll );
-    function handle_scroll ( e ) {
-      _scrollY = window.scrollY;
-    }
-
-    function animate() {
-       for (var i = 0; i < _layers.length; i++) {
-         _layers[i].y = _scrollY * _layers[i].offset;
-         _layers[i].el.style.transform = 'translateY(' + _layers[i].y + 'px)';
-       }
-        requestAnimationFrame( animate );
-    }
 
     var canvas = document.getElementById( 'canvas' ),
-        ctx = canvas.getContext( '2D' )
+        ctx = canvas.getContext( '2d' ),
+        _canvasW = canvas.width,
+        _canvasH = canvas.height,
+        _canvasRect = canvas.getBoundingClientRect(),
+        _winCenter = window.innerHeight / 2,
         loaded = 0,
         layers = [
-        {url: "2-mask.png", x: 60, y: 14},
-        {url: "2-light.png", x: 208, y: 166},
-        {url: "2-layer3.png", x: 124, y: 123},
-        {url: "2-layer2.png", x: 105, y: 67},
-        {url: "2-layer1.png", x: 33, y: 44}
-      ];
+          {url: "2-layer1.png", offset: -0.2, x: 8, y: 31},
+          {url: "2-layer2.png", offset: -0.3, x: 85, y: 56},
+          {url: "2-layer3.png", offset: -0.4, x: 105, y: 116},
+          {url: "2-light.png", offset: 2, x: 194, y: 162},
+          {url: "2-mask.png", offset: 0, x: 36, y: 0},
+        ];
 
-    for (var i = 0; i < layers.length; i++) {
-      var img  = new Image();
-      img.src = 'img/' + layers[i].url;
-      layers[i].img = img;
-      img.onlaod = handle_img_load;
+    function init() {
+      for (var i = 0; i < layers.length; i +=1) {
+        var img  = new Image();
+        img.src = 'img/' + layers[i].url;
+        img.onload = handle_img_load;
+        layers[i].img = img;
+      }
+
+      window.addEventListener('scroll', handle_scroll);
     }
+
 
     function handle_img_load() {
       loaded += 1;
@@ -167,23 +153,39 @@
       }
     }
 
+    function handle_scroll () {
+      _canvasRect = canvas.getBoundingClientRect();
+    }
+
     function animate() {
 
-      for (i = layers.length - 1; i > -1; i-=1) {
-        ctx.drawImage( layers[i].img, layers[i].x, layers[i].y );
+      ctx.clearRect ( 0, 0, _canvasW, _canvasH );
+
+      ctx.fillStyle = '#1b323d';
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillRect(0, 0, _canvasW, _canvasH);
+
+      for (i = 0; i < layers.length; i +=1) {
+
+        var _elCenter = _canvasRect.top + ( _canvasH / 2 );
+        var _distFromCenter = _elCenter - _winCenter;
+        var _y = layers[i].y + ( _distFromCenter * layers[i].offset );
+
+        if ( i == layers.length - 1 ) {
+          ctx.globalCompositeOperation = 'destination-in';
+        }
+
+        ctx.drawImage(layers[i].img, layers[i].x, _y);
+
       }
 
       requestAnimationFrame(animate)
     }
 
-    </script>
-
-
-
-
-    <script>
-
+    init();
 
     </script>
+
+
   </body>
 </html>
