@@ -1,3 +1,4 @@
+
 var path = "";
 var camera, scene, renderer;
 var cameraControls;
@@ -29,8 +30,9 @@ function fillScene() {
 
 	}
 	
-
-	var disk = new THREE.TextureLoader().load( "../img/circle.png" );
+	var textureLoader = new THREE.TextureLoader();
+	var disk = new textureLoader.load("../img/circle.png" );
+	
 	var material = new THREE.ParticleBasicMaterial(
 		{ size: 35, sizeAttenuation: false, map: disk, transparent: true } );
 	material.color.setHSL( 0.1, 0.6, 0.8 );
