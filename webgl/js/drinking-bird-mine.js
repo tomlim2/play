@@ -49,15 +49,19 @@ function fillScene() {
 	scene.add( lightSphere );
 
 	//ground
-	var solidGround = new THREE.Mesh(
-		new THREE.PlaneGeometry( 10000, 10000 ),
-		new THREE.MeshPhongMaterial({ color: 0xFFFFFF,
-			// polygonOffset moves the plane back from the eye a bit, so that the lines on top of
-			// the grid do not have z-fighting with the grid:
-			// Factor == 1 moves it back relative to the slope (more on-edge means move back farther)
-			// Units == 4 is a fixed amount to move back, and 4 is usually a good value
-			polygonOffset: true, polygonOffsetFactor: 1.0, polygonOffsetUnits: 4.0
-		}));
+	var texture = THREE.ImageUtils.loadTexture( '../img/grass512x512.jpg' ); 
+	texture.wrapS = texture.wrapT = THREE.RepeatWrapping; 
+	texture.repeat.set( 10, 10 ); 
+
+	var solidGround = new THREE.Mesh( new THREE.PlaneGeometry( 10000, 10000, 100, 100 ), 
+		new THREE.MeshLambertMaterial( { map: texture } ) ); 
+	solidGround.rotation.x = - Math.PI / 2;
+
+	// var solidGround = new THREE.Mesh(
+	// 	new THREE.PlaneGeometry( 10000, 10000 ),
+	// 	new THREE.MeshPhongMaterial({ color: 0xFFFFFF,
+	// 		polygonOffset: true, polygonOffsetFactor: 1.0, polygonOffsetUnits: 4.0
+	// 	}));
 	solidGround.rotation.x = -Math.PI / 2;
 	solidGround.receiveShadow = true;
 	scene.add( solidGround );
