@@ -170,7 +170,12 @@ function createBody(bbody) {
 	cylinder.position.set( 0, 360, 0 );
 	cylinder.rotation.x = 90 * Math.PI / 180.0;
 	bbody.add( cylinder );
-	var tail = createTail();
+	
+	var tailTexture = THREE.ImageUtils.loadTexture( '/media/img/cs291/textures/feather.png' );
+	var tail = new THREE.Mesh(
+    new THREE.PlaneGeometry( 100, 100, 1, 1 ),
+    new THREE.MeshLambertMaterial(
+        { map: tailTexture, side: THREE.DoubleSide, transparent: true } ) );
 	bbody.add(tail);
 }
 

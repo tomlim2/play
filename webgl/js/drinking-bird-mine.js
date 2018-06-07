@@ -53,15 +53,15 @@ function fillScene() {
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping; 
 	texture.repeat.set( 10, 10 ); 
 
-	var solidGround = new THREE.Mesh( new THREE.PlaneGeometry( 10000, 10000, 100, 100 ), 
-		new THREE.MeshLambertMaterial( { map: texture } ) ); 
-	solidGround.rotation.x = - Math.PI / 2;
+	// var solidGround = new THREE.Mesh( new THREE.PlaneGeometry( 10000, 10000, 100, 100 ), 
+	// 	new THREE.MeshLambertMaterial( { map: texture } ) ); 
+	// solidGround.rotation.x = - Math.PI / 2;
 
-	// var solidGround = new THREE.Mesh(
-	// 	new THREE.PlaneGeometry( 10000, 10000 ),
-	// 	new THREE.MeshPhongMaterial({ color: 0xFFFFFF,
-	// 		polygonOffset: true, polygonOffsetFactor: 1.0, polygonOffsetUnits: 4.0
-	// 	}));
+	var solidGround = new THREE.Mesh(
+		new THREE.PlaneGeometry( 10000, 10000 ),
+		new THREE.MeshPhongMaterial({ color: 0xFFFFFF,
+			polygonOffset: true, polygonOffsetFactor: 1.0, polygonOffsetUnits: 4.0
+		}));
 	solidGround.rotation.x = -Math.PI / 2;
 	solidGround.receiveShadow = true;
 	scene.add( solidGround );
