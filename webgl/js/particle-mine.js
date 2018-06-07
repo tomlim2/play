@@ -28,8 +28,9 @@ function fillScene() {
 		geometry.vertices.push( vertex );
 
 	}
+	
 
-	var disk = THREE.ImageUtils.loadTexture( path + 'circle.png' );
+	var disk = THREE.ImageUtils.loadTexture( 'circle.png' );
 	var material = new THREE.ParticleBasicMaterial(
 		{ size: 35, sizeAttenuation: false, map: disk, transparent: true } );
 	material.color.setHSL( 0.9, 0.2, 0.6 );
