@@ -30,10 +30,10 @@ function fillScene() {
 	}
 	
 
-	var disk = THREE.ImageUtils.loadTexture( 'circle.png' );
+	var disk = new THREE.TextureLoader().load( "../img/circle.png" );
 	var material = new THREE.ParticleBasicMaterial(
 		{ size: 35, sizeAttenuation: false, map: disk, transparent: true } );
-	material.color.setHSL( 0.9, 0.2, 0.6 );
+	material.color.setHSL( 0.1, 0.6, 0.8 );
 
 	var particles = new THREE.ParticleSystem( geometry, material );
 	particles.sortParticles = true;
